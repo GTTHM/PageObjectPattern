@@ -4,13 +4,14 @@ const GoogleSearchedPage = require('../lib/pages/google-searched-page');
 
 const pref = new webdriver.logging.Preferences();
 const driver = new webdriver.Builder()
-  .forBrowser('firefox')
+  .forBrowser('chrome')
   .setLoggingPrefs(pref)
   .build();
 
 describe("FullTest", () => {
 
     beforeAll(async () => {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         this.GoogleMainPage = new GoogleMainPage(webdriver, driver);
         this.GoogleSearchedPage = new GoogleSearchedPage(webdriver, driver);
     });
@@ -22,5 +23,5 @@ describe("FullTest", () => {
         await this.GoogleSearchedPage.checkRelevance("iTechArt");
     });
 
-    afterAll(async () => await driver.quit());
+    afterAll(async () => driver.quit());
 });

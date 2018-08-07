@@ -18,6 +18,6 @@ const driver = new webdriver.Builder()
         await this.GoogleSearchedPage.checkRelevance("iTechArt");
     } 
     finally {
-        await driver.quit()
+        driver.quit()
     }
 })();
