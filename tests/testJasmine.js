@@ -8,6 +8,17 @@ const driver = new webdriver.Builder()
   .setLoggingPrefs(pref)
   .build();
 
+function getAmount(text) {
+    let arr = text.slice(0, text.indexOf("(")).split(" ");
+    let result = "";
+
+    arr.forEach((word) => {
+        if (isFinite(parseFloat(word))) result += word;
+    });
+
+    return parseFloat(result);
+}
+
 function checkRelevanceByKey(text, key) {
     const words = text.replace(/\n/g, " ").toLowerCase().split(" ");
     let result = 0;
@@ -16,7 +27,7 @@ function checkRelevanceByKey(text, key) {
         if (~word.indexOf(key.toLowerCase())) result++;
     });
 
-    result = parseFloat((result / words.length).toFixed(3)) 
+    result = parseFloat(result / words.length); 
 
     return result;
 }
@@ -24,7 +35,7 @@ function checkRelevanceByKey(text, key) {
 describe("FullTest", () => {
 
     beforeAll(async () => {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
         this.GoogleMainPage = new GoogleMainPage(webdriver, driver);
         this.GoogleSearchedPage = new GoogleSearchedPage(webdriver, driver);
     });
@@ -36,15 +47,14 @@ describe("FullTest", () => {
         this.results = await this.GoogleSearchedPage.getAllResultsText();
     });
 
-    it("should be >10000", () => {
-        console.log(this.resultsAmountText);
+    it("Result amount should be >10000", () => {
+        let resultAmount = getAmount(this.resultsAmountText);
+        expect(resultAmount > 10000).toBe(true);
     });
 
-    describe("All results", () => {
-        it("must contain key", () => {
-            this.results.forEach((text) => {
-                console.log(checkRelevanceByKey(text, "iTechArt"));
-            });
+    it("All results must contain key", () => {
+        this.results.forEach((text) => {
+            expect(checkRelevanceByKey(text, "iTechArt") > 0).toBe(true);
         });
     });
 
