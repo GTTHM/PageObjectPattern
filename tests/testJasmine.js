@@ -1,3 +1,5 @@
+require('chromedriver');
+require('geckodriver');
 const webdriver = require('selenium-webdriver');
 const GoogleMainPage = require('../lib/pages/GoogleMainPage');
 const GoogleSearchedPage = require('../lib/pages/GoogleSearchedPage');
@@ -7,29 +9,12 @@ const driver = new webdriver.Builder()
   .forBrowser('firefox')
   .setLoggingPrefs(pref)
   .build();
+const KEY = "iTechArt";
 
-function getAmount(text) {
-    let arr = text.slice(0, text.indexOf("(")).split(" ");
-    let result = "";
-
-    arr.forEach((word) => {
-        if (isFinite(parseFloat(word))) result += word;
-    });
-
-    return parseFloat(result);
-}
-
-function checkRelevanceByKey(text, key) {
-    const words = text.replace(/\n/g, " ").toLowerCase().split(" ");
-    let result = 0;
-
-    words.forEach((word) => {
-        if (~word.indexOf(key.toLowerCase())) result++;
-    });
-
-    result = parseFloat(result / words.length); 
-
-    return result;
+function getResultAmount(text) {
+    return parseFloat(
+        text.slice(0, text.indexOf("(")).replace(/\D+/g,"")
+    );
 }
 
 describe("FullTest", () => {
@@ -42,19 +27,19 @@ describe("FullTest", () => {
 
     it("Functional Test", async () => {
         await this.GoogleMainPage.navigate();
-        await this.GoogleMainPage.search("iTechArt");
+        await this.GoogleMainPage.search(KEY);
         this.resultsAmountText = await this.GoogleSearchedPage.getResultsAmountText();
-        this.results = await this.GoogleSearchedPage.getAllResultsText();
+        this.results = await this.GoogleSearchedPage.getAllResultsTextArray();
     });
 
     it("Result amount should be >10000", () => {
-        let resultAmount = getAmount(this.resultsAmountText);
-        expect(resultAmount > 10000).toBe(true);
+        let resultAmount = getResultAmount(this.resultsAmountText);
+        expect(resultAmount).toBeGreaterThan(10000);
     });
 
     it("All results must contain key", () => {
         this.results.forEach((text) => {
-            expect(checkRelevanceByKey(text, "iTechArt") > 0).toBe(true);
+            expect(text).toContain(KEY);
         });
     });
 
