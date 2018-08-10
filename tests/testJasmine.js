@@ -1,6 +1,7 @@
 require('chromedriver');
 require('geckodriver');
 
+const BROWSER = require('../jasmineExecution');
 const testData = require('../resources/testData');
 const using = require('jasmine-data-provider');
 const webdriver = require('selenium-webdriver');
@@ -9,7 +10,7 @@ const GoogleSearchedPage = require('../lib/pages/GoogleSearchedPage');
 
 const pref = new webdriver.logging.Preferences();
 const driver = new webdriver.Builder()
-  .forBrowser('firefox')
+  .forBrowser(BROWSER)
   .setLoggingPrefs(pref)
   .build();
 
