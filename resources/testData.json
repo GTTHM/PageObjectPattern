@@ -1,0 +1,5 @@
+[
+    {"KEY" : "iTechArt", "minResultAmount" : 10000},
+    {"KEY" : "Jasmine", "minResultAmount" : 200000},
+    {"KEY" : "node.js", "minResultAmount" : 100000}
+]

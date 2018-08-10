@@ -1,5 +1,8 @@
 require('chromedriver');
 require('geckodriver');
+
+const testData = require('../resources/testData');
+const using = require('jasmine-data-provider');
 const webdriver = require('selenium-webdriver');
 const GoogleMainPage = require('../lib/pages/GoogleMainPage');
 const GoogleSearchedPage = require('../lib/pages/GoogleSearchedPage');
@@ -9,7 +12,6 @@ const driver = new webdriver.Builder()
   .forBrowser('firefox')
   .setLoggingPrefs(pref)
   .build();
-const KEY = "iTechArt";
 
 function getResultAmount(text) {
     return parseFloat(
@@ -25,23 +27,25 @@ describe("FullTest", () => {
         this.GoogleSearchedPage = new GoogleSearchedPage(webdriver, driver);
     });
 
-    it("Functional Test", async () => {
-        await this.GoogleMainPage.navigate();
-        await this.GoogleMainPage.search(KEY);
-        this.resultsAmountText = await this.GoogleSearchedPage.getResultsAmountText();
-        this.results = await this.GoogleSearchedPage.getAllResultsTextArray();
-    });
-
-    it("Result amount should be >10000", () => {
-        let resultAmount = getResultAmount(this.resultsAmountText);
-        expect(resultAmount).toBeGreaterThan(10000);
-    });
-
-    it("All results must contain key", () => {
-        this.results.forEach((text) => {
-            expect(text).toContain(KEY);
+    using(testData, (data) => {
+        it("Functional Test", async () => {
+            await this.GoogleMainPage.navigate();
+            await this.GoogleMainPage.search(data.KEY);
+            this.resultsAmountText = await this.GoogleSearchedPage.getResultsAmountText();
+            this.results = await this.GoogleSearchedPage.getAllResultsTextArray();
         });
-    });
+    
+        it(`Result amount should be >${data.minResultAmount}`, () => {
+            let resultAmount = getResultAmount(this.resultsAmountText);
+            expect(resultAmount).toBeGreaterThan(data.minResultAmount);
+        });
+    
+        it(`All results must contain ${data.KEY}`, () => {
+            this.results.forEach((text) => {
+                expect(text.toLowerCase()).toContain(data.KEY.toLowerCase());
+            });
+        });
+    })
 
     afterAll(async () => driver.quit());
 });
