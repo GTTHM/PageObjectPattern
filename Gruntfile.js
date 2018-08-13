@@ -8,8 +8,12 @@ module.exports = function(grunt) {
             }
         },
         env: {
-            dev : {
-                BROWSER : grunt.option('browserName') || "firefox"
+            executeTest : {
+                options : {
+                    add : {
+                        BROWSER : grunt.option('browserName') || "firefox"
+                    }
+                }
             }
         }
     });
@@ -24,6 +28,6 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('executeTest', () => {
-        grunt.task.run(['env:dev', 'run:testExecute']);
+        grunt.task.run(['env', 'run:testExecute']);
     });
 };
