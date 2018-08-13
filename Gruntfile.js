@@ -6,20 +6,24 @@ module.exports = function(grunt) {
                     'jasmineExecution.js'
                 ]
             }
+        },
+        env: {
+            dev : {
+                BROWSER : grunt.option('browserName') || "firefox"
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-npm-install');
     grunt.loadNpmTasks('grunt-run');
-
-    process.env.BROWSER = grunt.option('browserName') || "firefox";
+    grunt.loadNpmTasks('grunt-env');
 
     grunt.registerTask('installAndExecuteTest', async () => {
         await grunt.task.run(['npm-install']);
-        await grunt.task.run(['run:testExecute']);
+        await grunt.task.run(['executeTest']);
     });
 
     grunt.registerTask('executeTest', () => {
-        grunt.task.run(['run:testExecute']);
+        grunt.task.run(['env:dev', 'run:testExecute']);
     });
 };

@@ -16,6 +16,7 @@
     "chromedriver": "^2.41.0",
     "geckodriver": "^1.12.1",
     "grunt-contrib-uglify": "^3.4.0",
+    "grunt-env": "^0.4.4",
     "grunt-npm-install": "^0.3.1",
     "grunt-run": "^0.8.1",
     "gulp-run": "^1.7.1",
@@ -27,7 +28,8 @@
   },
   "devDependencies": {
     "grunt": "^1.0.3",
-    "gulp": "^4.0.0"
+    "gulp": "^4.0.0",
+    "gulp-env": "^0.4.0"
   },
   "bugs": {
     "url": "https://github.com/GTTHM/PageObjectPattern/issues"
