@@ -1,23 +1,37 @@
 {
-    "name": "pageobjectpattern",
-    "version": "0.1.0",
-    "description": "Test Practise",
-    "author": "Igor Stepkin <ihar.stsepkin@gmail.com>",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/GTTHM/PageObjectPattern"
-    },
-    "homepage": "https://github.com/GTTHM/PageObjectPattern",
-    "scripts": {
-        "installAndExecuteTest": "npm install && node jasmineExecution.js",
-        "executeTest": "node jasmineExecution.js"
-    },
-    "dependencies": {
-        "chromedriver": "^2.41.0",
-        "geckodriver": "^1.12.1",
-        "jasmine": "^3.1.0",
-        "jasmine-data-provider": "^2.2.0",
-        "selenium-webdriver": "^4.0.0-alpha.1",
-        "yargs": "^12.0.1"
-    }
+  "name": "pageobjectpattern",
+  "version": "0.1.0",
+  "description": "Test Practise",
+  "author": "Igor Stepkin <ihar.stsepkin@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GTTHM/PageObjectPattern.git"
+  },
+  "homepage": "https://github.com/GTTHM/PageObjectPattern",
+  "scripts": {
+    "installAndExecuteTest": "npm install && node jasmineExecution.js",
+    "executeTest": "node jasmineExecution.js"
+  },
+  "dependencies": {
+    "chromedriver": "^2.41.0",
+    "geckodriver": "^1.12.1",
+    "grunt-contrib-uglify": "^3.4.0",
+    "grunt-npm-install": "^0.3.1",
+    "grunt-run": "^0.8.1",
+    "jasmine": "^3.1.0",
+    "jasmine-data-provider": "^2.2.0",
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "yargs": "^12.0.1"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.3"
+  },
+  "bugs": {
+    "url": "https://github.com/GTTHM/PageObjectPattern/issues"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "license": "ISC"
 }
