@@ -7,5 +7,7 @@ Scenario Outline: Search test
     And each result must contain <KEY>
     
 Examples:
-| KEY | minResultAmount |
-| iTechArt | 10000  |
+|        KEY | minResultAmount |
+| "iTechArt" |          10000  |
+|  "Jasmine" |         200000  |
+|  "node.js" |         100000  |
